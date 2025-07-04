@@ -2,6 +2,7 @@ package br.gov.sp.itu.fatec.videolocaldora.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TBL_LOCACAOFILME")
+@Table(name = "locacoesFilme")
 public class LocacaoFilme implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,6 @@ public class LocacaoFilme implements Serializable {
   @ManyToOne
   @JoinColumn(name = "locacao_id")
   private Locacao locacao;
-
 
   @ManyToOne
   @JoinColumn(name = "filme_id")

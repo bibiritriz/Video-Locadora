@@ -15,60 +15,60 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import br.gov.sp.itu.fatec.videolocaldora.entities.Filme;
-import br.gov.sp.itu.fatec.videolocaldora.services.FilmeService;
+import br.gov.sp.itu.fatec.videolocaldora.entities.Cliente;
+import br.gov.sp.itu.fatec.videolocaldora.services.ClienteService;
 
 @RestController
 @CrossOrigin
-public class FilmeController {
+public class ClienteController {
   @Autowired
-  private FilmeService service;
+  private ClienteService service;
 
-  @GetMapping("filmes")
-  public ResponseEntity<List<Filme>> getAll() {
+  @GetMapping("clientes")
+  public ResponseEntity<List<Cliente>> getAll() {
     return ResponseEntity.ok(service.getAll());
   }
 
-  @GetMapping("filme/{id}")
-  public ResponseEntity<Filme> getById(@PathVariable Long id) {
-    if (!service.filmExist(id)) {
+  @GetMapping("cliente/{id}")
+  public ResponseEntity<Cliente> getById(@PathVariable Long id) {
+    if (!service.clienteExist(id)) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(service.getById(id));
   }
 
-  @PostMapping("filmes")
-  public ResponseEntity<Filme> save(@RequestBody Filme filme) {
-    Filme savedFilme = service.save(filme);
+  @PostMapping("clientes")
+  public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
+    Cliente savedCliente = service.save(cliente);
 
-    URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/filme/{id}")
-        .buildAndExpand(savedFilme.getId()).toUri();
+    URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/cliente/{id}")
+        .buildAndExpand(savedCliente.getId()).toUri();
 
-    return ResponseEntity.created(location).body(savedFilme);
+    return ResponseEntity.created(location).body(savedCliente);
   }
 
-  @PutMapping("filme/{id}")
-  public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Filme filme) {
-    if (!service.filmExist(id)) {
+  @PutMapping("cliente/{id}")
+  public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Cliente cliente) {
+    if (!service.clienteExist(id)) {
       return ResponseEntity.notFound().build();
     }
-    service.update(filme);
+    service.update(cliente);
     return ResponseEntity.noContent().build();
   }
 
-  @PatchMapping("filme/{id}")
+  @PatchMapping("cliente/{id}")
   public ResponseEntity<Void> parcialUpdate(@PathVariable Long id,
       @RequestBody Map<String, Object> campos) {
-    if (!service.filmExist(id)) {
+    if (!service.clienteExist(id)) {
       return ResponseEntity.notFound().build();
     }
     service.parcialUpdate(id, campos);
     return ResponseEntity.noContent().build();
   }
 
-  @DeleteMapping("filme/{id}")
+  @DeleteMapping("cliente/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    if (!service.filmExist(id)) {
+    if (!service.clienteExist(id)) {
       return ResponseEntity.notFound().build();
     }
     service.delete(id);

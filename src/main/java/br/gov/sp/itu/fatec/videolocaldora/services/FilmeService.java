@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import br.gov.sp.itu.fatec.videolocaldora.entities.Filme;
+import br.gov.sp.itu.fatec.videolocaldora.entities.LocacaoFilme;
 import br.gov.sp.itu.fatec.videolocaldora.repositories.FilmeRepository;
 
 @Service
@@ -25,13 +26,18 @@ public class FilmeService {
     return repository.findById(id).orElseThrow(() -> new RuntimeException("Filme não encontrado."));
   }
 
+  public boolean filmExist(Long id) {
+    return repository.existsById(id);
+  }
+
   @Transactional
-  public void saveUpdate(Filme filme) {
+  public void update(Filme filme) {
     Filme novoFilme = repository.getReferenceById(filme.getId());
     novoFilme.setTitulo(filme.getTitulo());
-    novoFilme.setDisponibilidade(filme.isDisponibilidade());
+    novoFilme.setDisponivel(filme.isDisponivel());
     novoFilme.setDiretor(filme.getDiretor());
     novoFilme.setAnoLancamento(filme.getAnoLancamento());
+    
     repository.save(novoFilme);
   }
 
@@ -45,7 +51,7 @@ public class FilmeService {
           filmeExistente.setTitulo((String) valor);
           break;
         case "disponibilidade":
-          filmeExistente.setDisponibilidade((Boolean) valor);
+          filmeExistente.setDisponivel((Boolean) valor);
           break;
         case "diretor":
           filmeExistente.setDiretor((String) valor);
@@ -53,8 +59,10 @@ public class FilmeService {
         case "anoLancamento":
           filmeExistente.setAnoLancamento((Integer) valor);
           break;
+        case "locacao":
+          filmeExistente.setLocacoesFilmes((List<LocacaoFilme>) valor);
         default:
-          throw new RuntimeException("Filme não encontrado.");
+          throw new RuntimeException("Campo inválido.");
       }
     });
     repository.save(filmeExistente);

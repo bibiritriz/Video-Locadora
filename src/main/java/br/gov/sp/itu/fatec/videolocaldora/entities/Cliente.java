@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TBL_CLIENTES")
+@Table(name = "clientes")
 public class Cliente implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,10 +1,12 @@
 package br.gov.sp.itu.fatec.videolocaldora.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,13 +18,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TBL_LOCACAO")
+@Table(name = "locacoes")
 public class Locacao implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private Date dataRetirada;
-  private Date dataDevolucao;
+  private LocalDate dataRetirada;
+  private LocalDate dataDevolucao;
 
   @ManyToOne
   @JoinColumn(name = "cliente_id")
@@ -39,19 +41,19 @@ public class Locacao implements Serializable {
     this.id = id;
   }
 
-  public Date getDataRetirada() {
+  public LocalDate getDataRetirada() {
     return dataRetirada;
   }
 
-  public void setDataRetirada(Date dataRetirada) {
+  public void setDataRetirada(LocalDate dataRetirada) {
     this.dataRetirada = dataRetirada;
   }
 
-  public Date getDataDevolucao() {
+  public LocalDate getDataDevolucao() {
     return dataDevolucao;
   }
 
-  public void setDataDevolucao(Date dataDevolucao) {
+  public void setDataDevolucao(LocalDate dataDevolucao) {
     this.dataDevolucao = dataDevolucao;
   }
 
